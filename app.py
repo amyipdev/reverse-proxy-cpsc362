@@ -87,5 +87,21 @@ def amy(path):
                 if n.lower() not in 
                 ["Content-Encoding", "Content-Length", "Transfer-Encoding", "Connection"]])
 
+
+@app.route("/nicholas/<path:path>")
+def nicholas(path):
+    if request.method != "GET":
+        return "405 Method Not Allowed", 405
+    r = requests.get(f"https://localhost:5006/{path}")
+    return Response(
+            r.content,
+            r.status_code,
+            [
+                (n, v) 
+                for (n, v) 
+                in r.raw.headers.items() 
+                if n.lower() not in 
+                ["Content-Encoding", "Content-Length", "Transfer-Encoding", "Connection"]])
+
 if __name__ == "__main__":
     app.run(host="::")
